@@ -1,52 +1,73 @@
-[![N|Solid](https://iili.io/Hi9giog.png)](https://www.enverx.com/)
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-EnverX offers a simple and convenient platform to fund early-stage projects
-and trade future carbon credits.
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## _Assginment For Backend Developer Role_
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-### Instructions
-``` diff
-- Fork this repository
-- Take a fresh `pull`
-- Create a `development` branch
-- `Push` the updated code after task completion
-Note: Make sure to add proper `commit` messages
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Installation
+
+```bash
+$ npm install
 ```
 
-### Task Requirements
-1. Create a RESTful API for a simple blog application.
-2. Use Node.js and Express.js as the backend framework.
-3. Implement CRUD (Create, Read, Update, Delete) operations for blog posts.
-4. Store the blog posts in a dB
-5. Include validation for the API endpoints to ensure data integrity.
-6. Implement error handling and return appropriate HTTP status codes.
-7. Use Git for version control and host the project on GitHub.
-8. Write clear and concise documentation on how to set up and use the API.
-9. Use Typescript to get a Bonus point.
+## Running the app
 
-### Functional Requirements
-1. Set up a new Node.js project and initialize it with a package.json file.
-2. Create the necessary Express.js routes and controllers for CRUD operations on blog posts.
+```bash
+# development
+$ npm run start
 
-- `GET /posts` - Get all blog posts (Mandatory: Apply sorting based on created Date, blog name and filters based on category).
-- `GET /posts/:id` - Get a specific blog post by ID.
-- `POST /posts` - Create a new blog post.
-- `PUT /posts/:id` - Update an existing blog post.
-- `DELETE /posts/:id` - Delete a blog post.
+# watch mode
+$ npm run start:dev
 
-3. Implement validation for the API endpoints to ensure the data is correct and complete.
-4. Handle errors gracefully and return appropriate HTTP status codes (e.g., 404 for not found, 500 for server errors, etc.).
-5. Test the API endpoints using a tool like Postman or cURL.
-6. Write a README.md file with instructions on setting up the project, running it, and using the API.
-7. Initialize a Git repository, commit your code regularly, and push it to GitHub.
-8. Optionally, include any additional features or improvements you think would enhance the API.
+# production mode
+$ npm run start:prod
+```
 
-### Timeline
-The estimated time to complete this assignment is 6-7 hours, but it may vary based on your familiarity and experience with the technologies.
+## Test
 
-### To Be Considered
-1. The submitted code should be plagiarism free otherwise your application will be disqualified
-2. Please complete the assignment and submit it to us by the submission deadline assigned to you. 
-3. follow the instructions carefully, as we will evaluate your code, documentation, and adherence to best practices. Once you have finished, please send us the GitHub repository link.
-4. If you have any questions or need further clarification, please don't hesitate to reach out to us at hr@enverx.com. We look forward to reviewing your work and discussing it with you in the next stage of the interview process.
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](LICENSE).
