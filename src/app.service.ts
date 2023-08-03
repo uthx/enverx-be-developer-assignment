@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBlogDTO } from './dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -14,5 +14,16 @@ export class AppService {
     const blogInstance = this.blogsRepository.create(blogData);
     await this.blogsRepository.save(blogInstance);
     return 'Post created successfully';
+  }
+  async getPost(id: string): Promise<Blogs> {
+    const blog = await this.blogsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!blog) {
+      throw new NotFoundException('Blog post not found for the provided ID');
+    }
+    return blog;
   }
 }

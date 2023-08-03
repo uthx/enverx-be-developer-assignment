@@ -10,7 +10,7 @@ export const typeormConfig: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   synchronize: false,
-  entities: [Blogs]
+  entities: [Blogs],
 };
 
 const dataSourceConfig = Object.assign({}, typeormConfig, {
