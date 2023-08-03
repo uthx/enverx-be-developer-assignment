@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 export enum Categories {
   TECHNOLOGY = 'technology',
   POLITICS = 'politics',
@@ -17,12 +17,15 @@ export class Blogs {
   @Column()
   content: string;
 
+  @Column()
+  author: string;
+
   @Column({ type: 'set', enum: Categories })
   category: string[];
 
-  @Column({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @Column({ name: 'updated_at' })
+@UpdateDateColumn({ name: 'updated_at' })
   updateAt: Date;
 }
