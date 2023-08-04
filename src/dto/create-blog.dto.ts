@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEnum, IsArray } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum } from 'class-validator';
 import { Categories } from 'src/entities';
 export class CreateBlogDTO {
   @IsNotEmpty()
@@ -14,6 +14,6 @@ export class CreateBlogDTO {
   author: string;
 
   @IsNotEmpty()
-  @IsEnum(Categories, {each: true})
+  @IsEnum(Categories, { each: true })
   category: Categories[];
 }

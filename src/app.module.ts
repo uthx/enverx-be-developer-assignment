@@ -15,7 +15,7 @@ import { Blogs } from './entities/blogs.entity';
       load: [EnvConfiguration],
       validate: EnvValidation,
     }),
-    TypeOrmModule.forFeature([Blogs])
+    TypeOrmModule.forFeature([Blogs]),
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,1 +1,1 @@
-export * from './blogs.entity'
+export * from './blogs.entity';

@@ -1,18 +1,31 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateBlogDTO } from './dto';
+import { CreateBlogDTO, GetPostDTO } from './dto';
 import { Blogs } from './entities';
+import { FilterDTO } from './dto/filter-blog.dto';
 
 @Controller('posts')
 export class AppController {
   constructor(private readonly appService: AppService) {}
   @Post()
   async createPost(@Body() body: CreateBlogDTO): Promise<string> {
-    return await this.appService.createPost(body)
+    return await this.appService.createPost(body);
   }
   @Get(':id')
-  async getPost(@Param() id: string): Promise<Blogs> {
+  async getPost(@Param() { id }: GetPostDTO): Promise<Blogs> {
     return await this.appService.getPost(id);
   }
-
+  @Get()
+  async getPosts(@Query() query: FilterDTO): Promise<Blogs[] | any> {
+    return await this.appService.getPosts(query);
+  }
 }

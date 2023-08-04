@@ -11,6 +11,7 @@ export const typeormConfig: DataSourceOptions = {
   database: process.env.DB_NAME,
   synchronize: false,
   entities: [Blogs],
+  logging: true,
 };
 
 const dataSourceConfig = Object.assign({}, typeormConfig, {
