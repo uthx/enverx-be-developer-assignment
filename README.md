@@ -1,73 +1,147 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Blog REST API with TypeORM and MySQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This repository contains a RESTful API for managing blog posts, implemented using NestJS, TypeORM, and MySQL. The API allows users to perform CRUD operations on blog posts and supports sorting and filtering based on categories.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## API Endpoints
 
-## Description
+### Create a New Blog Post
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Endpoint: `POST /blog/posts`
 
-## Installation
-
-```bash
-$ npm install
+Request Body:
+```json
+{
+  "title": "My Blog Post",
+  "content": "This is the content of my blog post.",
+  "author": "John Doe",
+  "category": ["Technology", "Programming"]
+}
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+Response (Success):
+```json
+{
+  "message": "Post was created successfully"
+}
 ```
 
-## Test
+### Get a Specific Blog Post
 
-```bash
-# unit tests
-$ npm run test
+Endpoint: `GET /blog/posts/:id`
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+Response (Success):
+```json
+{
+  "id": "1234567890",
+  "title": "My Blog Post",
+  "content": "This is the content of my blog post.",
+  "author": "John Doe",
+  "category": ["Technology", "Programming"],
+  "created_at": "2023-08-02T12:34:56Z",
+  "updated_at": "2023-08-02T12:34:56Z"
+}
 ```
 
-## Support
+### Get All Blog Posts
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Endpoint: `GET /blog/posts`
 
-## Stay in touch
+Query Parameters:
+- `category`: Filter the blog posts by category (e.g., `Technology`, `Programming`)
+- `sortOrder`: Sort the blog posts by created date in ascending (`asc`) or descending (`desc`) order
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Response (Success):
+```json
+[
+  {
+    "id": "1234567890",
+    "title": "Blog Post 1",
+    "content": "This is the content of blog post 1.",
+    "author": "Jane Doe",
+    "category": ["Technology"],
+    "created_at": "2023-08-01T10:30:00Z",
+    "updated_at": "2023-08-01T10:30:00Z"
+  },
+  {
+    "id": "0987654321",
+    "title": "Blog Post 2",
+    "content": "This is the content of blog post 2.",
+    "author": "John Doe",
+    "category": ["Programming"],
+    "created_at": "2023-08-02T08:00:00Z",
+    "updated_at": "2023-08-02T08:00:00Z"
+  }
+]
+```
 
-## License
+### Update an Existing Blog Post
 
-Nest is [MIT licensed](LICENSE).
+Endpoint: `PUT /blog/posts/:id`
+
+Request Body (Partial Update):
+```json
+{
+  "title": "Updated Blog Post Title"
+}
+```
+
+Response (Success):
+```json
+{
+  "message": "Post was updated successfully"
+}
+```
+
+### Delete a Blog Post
+
+Endpoint: `DELETE /blog/posts/:id`
+
+Response (Success):
+```json
+{
+  "message": "Post was deleted successfully"
+}
+```
+
+## How to Use the API
+
+1. Clone the repository and install dependencies:
+
+```bash
+https://github.com/uthx/enverx-be-developer-assignment.git
+cd enverx-be-developer-assignment
+npm install
+
+```
+
+2. Set up MySQL database: Create a MySQL database and update the database configuration in `.env` with your database credentials.
+
+3. Run database migrations
+
+```bash
+npm run db:migrate
+```
+4. Run the application in development mode:
+
+```bash
+npm run start:dev
+```
+
+5. The API will be accessible at `http://localhost:3000/blog`.
+
+5. Use API endpoints described above to perform CRUD operations on blog posts.
+
+## DTO (Data Transfer Objects)
+
+The repository includes several DTOs (Data Transfer Objects) that define the structure and validation rules for request payloads:
+
+- `CreateBlogDTO`: For creating a new blog post.
+- `UpdateBlogDTO`: For updating an existing blog post (supports partial updates).
+- `UpdateBlogIdDTO`: For validating the blog post ID in the request URL.
+- `DeletePostDTO`: For validating the blog post ID in the request URL for deletion.
+- `FilterDTO`: For validating and filtering blog posts based on category and sort order.
+- `GetPostDTO`: For validating the blog post ID in the request URL for fetching a specific post.
+
+## Future improvements
+
+We can improve on the database side of things, maybe we can add 2 seperae table 1- Users and 2- Categories to make the system more robust.
