@@ -9,9 +9,9 @@ import {
   Query,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateBlogDTO, GetPostDTO } from './dto';
+import { CreateBlogDTO, DeletePostDTO, GetPostDTO } from './dto';
 import { Blogs } from './entities';
-import { FilterDTO } from './dto/filter-blog.dto';
+import { FilterDTO } from './dto';
 
 @Controller('posts')
 export class AppController {
@@ -27,5 +27,9 @@ export class AppController {
   @Get()
   async getPosts(@Query() query: FilterDTO): Promise<Blogs[] | any> {
     return await this.appService.getPosts(query);
+  }
+  @Delete(':id')
+  async deletePost(@Param() {id}: DeletePostDTO): Promise<string> {
+    return await this.appService.deletePost(id)
   }
 }

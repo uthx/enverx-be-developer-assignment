@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { Blogs } from './entities';
 import { SortOrder, FilterDTO, CreateBlogDTO } from './dto';
 @Injectable()
@@ -41,5 +41,13 @@ export class AppService {
       throw new NotFoundException('Blogs not found with the provided category');
     }
     return blogs;
+  }
+  async deletePost(id: string): Promise<string> {
+    const existResponse = await this.blogsRepository.exist({ where: { id } });
+    if (existResponse) {
+      await this.blogsRepository.delete(id);
+      return 'Post was successfully deleted';
+    }
+    throw new NotFoundException("Post was not deleted since it doesn't exists");
   }
 }
