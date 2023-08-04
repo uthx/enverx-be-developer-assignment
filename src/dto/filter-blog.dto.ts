@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEnum, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsEnum } from 'class-validator';
 import { Categories } from 'src/entities';
 
 export enum SortOrder {

@@ -1,24 +1,24 @@
-import { IsString, IsNotEmpty, IsEnum } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, IsOptional } from 'class-validator';
 import { Expose } from 'class-transformer';
 import { Categories } from 'src/entities';
-export class CreateBlogDTO {
+export class UpdateBlogDTO {
   @Expose()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   title: string;
 
   @Expose()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   content: string;
 
   @Expose()
-  @IsNotEmpty()
-  @IsString()
-  author: string;
-  
-  @Expose()
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(Categories, { each: true })
   category: Categories[];
+}
+export class UpdateBlogIdDTO {
+  @IsNotEmpty()
+  @IsString()
+  id: string;
 }

@@ -1,8 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Blogs } from './entities';
-import { SortOrder, FilterDTO, CreateBlogDTO } from './dto';
+import { SortOrder, FilterDTO, CreateBlogDTO, UpdateBlogDTO } from './dto';
+import { SuccessMessages, ErrorMessages } from './common';
+import { plainToClass } from 'class-transformer';
 @Injectable()
 export class AppService {
   constructor(
@@ -11,9 +17,12 @@ export class AppService {
   ) {}
 
   async createPost(blogData: CreateBlogDTO): Promise<string> {
-    const blogInstance = this.blogsRepository.create(blogData);
+    const validatedData = plainToClass(CreateBlogDTO, blogData, {
+      excludeExtraneousValues: true,
+    });
+    const blogInstance = this.blogsRepository.create(validatedData);
     await this.blogsRepository.save(blogInstance);
-    return 'Post created successfully';
+    return SuccessMessages.CreatePost;
   }
   async getPost(id: string): Promise<Blogs> {
     const blog = await this.blogsRepository.findOne({
@@ -22,7 +31,7 @@ export class AppService {
       },
     });
     if (!blog) {
-      throw new NotFoundException('Blog post not found for the provided ID');
+      throw new NotFoundException(ErrorMessages.GetBlogNotFound);
     }
     return blog;
   }
@@ -38,16 +47,31 @@ export class AppService {
     }
     const blogs = await queryBuilder.getMany();
     if (!blogs?.length) {
-      throw new NotFoundException('Blogs not found with the provided category');
+      throw new NotFoundException(ErrorMessages.GetBlogsNotFound);
     }
     return blogs;
   }
-  async deletePost(id: string): Promise<string> {
-    const existResponse = await this.blogsRepository.exist({ where: { id } });
-    if (existResponse) {
-      await this.blogsRepository.delete(id);
-      return 'Post was successfully deleted';
+  async updatePost(id: string, postUpdateData: UpdateBlogDTO): Promise<string> {
+    const validatedData = plainToClass(UpdateBlogDTO, postUpdateData, {
+      excludeExtraneousValues: true,
+      exposeUnsetFields: false,
+    });
+    if (!Object.keys(postUpdateData)?.length) {
+      throw new BadRequestException(ErrorMessages.UpdatePostInvalidData);
     }
-    throw new NotFoundException("Post was not deleted since it doesn't exists");
+    const doesBlogExists = await this.blogsRepository.exist({ where: { id } });
+    if (doesBlogExists) {
+      await this.blogsRepository.update(id, validatedData);
+      return SuccessMessages.UpdatePost;
+    }
+    throw new NotFoundException(ErrorMessages.UpdatePostNotExist);
+  }
+  async deletePost(id: string): Promise<string> {
+    const doesBlogExists = await this.blogsRepository.exist({ where: { id } });
+    if (doesBlogExists) {
+      await this.blogsRepository.delete(id);
+      return SuccessMessages.DeletePost;
+    }
+    throw new NotFoundException(ErrorMessages.DeleteBlogNotExist);
   }
 }

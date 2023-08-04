@@ -9,9 +9,15 @@ import {
   Query,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateBlogDTO, DeletePostDTO, GetPostDTO } from './dto';
+import {
+  CreateBlogDTO,
+  DeletePostDTO,
+  GetPostDTO,
+  FilterDTO,
+  UpdateBlogDTO,
+  UpdateBlogIdDTO,
+} from './dto';
 import { Blogs } from './entities';
-import { FilterDTO } from './dto';
 
 @Controller('posts')
 export class AppController {
@@ -29,7 +35,14 @@ export class AppController {
     return await this.appService.getPosts(query);
   }
   @Delete(':id')
-  async deletePost(@Param() {id}: DeletePostDTO): Promise<string> {
-    return await this.appService.deletePost(id)
+  async deletePost(@Param() { id }: DeletePostDTO): Promise<string> {
+    return await this.appService.deletePost(id);
+  }
+  @Put(':id')
+  async updatePost(
+    @Param() { id }: UpdateBlogIdDTO,
+    @Body() body: UpdateBlogDTO,
+  ): Promise<string> {
+    return await this.appService.updatePost(id, body);
   }
 }
