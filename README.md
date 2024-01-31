@@ -1,52 +1,147 @@
-[![N|Solid](https://iili.io/Hi9giog.png)](https://www.enverx.com/)
+# Blog REST API with TypeORM and MySQL
 
-EnverX offers a simple and convenient platform to fund early-stage projects
-and trade future carbon credits.
+This repository contains a RESTful API for managing blog posts, implemented using NestJS, TypeORM, and MySQL. The API allows users to perform CRUD operations on blog posts and supports sorting and filtering based on categories.
 
-## _Assginment For Backend Developer Role_
+## API Endpoints
 
-### Instructions
-``` diff
-- Fork this repository
-- Take a fresh `pull`
-- Create a `development` branch
-- `Push` the updated code after task completion
-Note: Make sure to add proper `commit` messages
+### Create a New Blog Post
+
+Endpoint: `POST /blog/posts`
+
+Request Body:
+```json
+{
+  "title": "My Blog Post",
+  "content": "This is the content of my blog post.",
+  "author": "John Doe",
+  "category": ["Technology", "Programming"]
+}
 ```
 
-### Task Requirements
-1. Create a RESTful API for a simple blog application.
-2. Use Node.js and Express.js as the backend framework.
-3. Implement CRUD (Create, Read, Update, Delete) operations for blog posts.
-4. Store the blog posts in a dB
-5. Include validation for the API endpoints to ensure data integrity.
-6. Implement error handling and return appropriate HTTP status codes.
-7. Use Git for version control and host the project on GitHub.
-8. Write clear and concise documentation on how to set up and use the API.
-9. Use Typescript to get a Bonus point.
+Response (Success):
+```json
+{
+  "message": "Post was created successfully"
+}
+```
 
-### Functional Requirements
-1. Set up a new Node.js project and initialize it with a package.json file.
-2. Create the necessary Express.js routes and controllers for CRUD operations on blog posts.
+### Get a Specific Blog Post
 
-- `GET /posts` - Get all blog posts (Mandatory: Apply sorting based on created Date, blog name and filters based on category).
-- `GET /posts/:id` - Get a specific blog post by ID.
-- `POST /posts` - Create a new blog post.
-- `PUT /posts/:id` - Update an existing blog post.
-- `DELETE /posts/:id` - Delete a blog post.
+Endpoint: `GET /blog/posts/:id`
 
-3. Implement validation for the API endpoints to ensure the data is correct and complete.
-4. Handle errors gracefully and return appropriate HTTP status codes (e.g., 404 for not found, 500 for server errors, etc.).
-5. Test the API endpoints using a tool like Postman or cURL.
-6. Write a README.md file with instructions on setting up the project, running it, and using the API.
-7. Initialize a Git repository, commit your code regularly, and push it to GitHub.
-8. Optionally, include any additional features or improvements you think would enhance the API.
+Response (Success):
+```json
+{
+  "id": "1234567890",
+  "title": "My Blog Post",
+  "content": "This is the content of my blog post.",
+  "author": "John Doe",
+  "category": ["Technology", "Programming"],
+  "created_at": "2023-08-02T12:34:56Z",
+  "updated_at": "2023-08-02T12:34:56Z"
+}
+```
 
-### Timeline
-The estimated time to complete this assignment is 6-7 hours, but it may vary based on your familiarity and experience with the technologies.
+### Get All Blog Posts
 
-### To Be Considered
-1. The submitted code should be plagiarism free otherwise your application will be disqualified
-2. Please complete the assignment and submit it to us by the submission deadline assigned to you. 
-3. follow the instructions carefully, as we will evaluate your code, documentation, and adherence to best practices. Once you have finished, please send us the GitHub repository link.
-4. If you have any questions or need further clarification, please don't hesitate to reach out to us at hr@enverx.com. We look forward to reviewing your work and discussing it with you in the next stage of the interview process.
+Endpoint: `GET /blog/posts`
+
+Query Parameters:
+- `category`: Filter the blog posts by category (e.g., `Technology`, `Programming`)
+- `sortOrder`: Sort the blog posts by created date in ascending (`asc`) or descending (`desc`) order
+
+Response (Success):
+```json
+[
+  {
+    "id": "1234567890",
+    "title": "Blog Post 1",
+    "content": "This is the content of blog post 1.",
+    "author": "Jane Doe",
+    "category": ["Technology"],
+    "created_at": "2023-08-01T10:30:00Z",
+    "updated_at": "2023-08-01T10:30:00Z"
+  },
+  {
+    "id": "0987654321",
+    "title": "Blog Post 2",
+    "content": "This is the content of blog post 2.",
+    "author": "John Doe",
+    "category": ["Programming"],
+    "created_at": "2023-08-02T08:00:00Z",
+    "updated_at": "2023-08-02T08:00:00Z"
+  }
+]
+```
+
+### Update an Existing Blog Post
+
+Endpoint: `PUT /blog/posts/:id`
+
+Request Body (Partial Update):
+```json
+{
+  "title": "Updated Blog Post Title"
+}
+```
+
+Response (Success):
+```json
+{
+  "message": "Post was updated successfully"
+}
+```
+
+### Delete a Blog Post
+
+Endpoint: `DELETE /blog/posts/:id`
+
+Response (Success):
+```json
+{
+  "message": "Post was deleted successfully"
+}
+```
+
+## How to Use the API
+
+1. Clone the repository and install dependencies:
+
+```bash
+https://github.com/uthx/enverx-be-developer-assignment.git
+cd enverx-be-developer-assignment
+npm install
+
+```
+
+2. Set up MySQL database: Create a MySQL database and update the database configuration in `.env` with your database credentials.
+
+3. Run database migrations
+
+```bash
+npm run db:migrate
+```
+4. Run the application in development mode:
+
+```bash
+npm run start:dev
+```
+
+5. The API will be accessible at `http://localhost:3000/blog`.
+
+5. Use API endpoints described above to perform CRUD operations on blog posts.
+
+## DTO (Data Transfer Objects)
+
+The repository includes several DTOs (Data Transfer Objects) that define the structure and validation rules for request payloads:
+
+- `CreateBlogDTO`: For creating a new blog post.
+- `UpdateBlogDTO`: For updating an existing blog post (supports partial updates).
+- `UpdateBlogIdDTO`: For validating the blog post ID in the request URL.
+- `DeletePostDTO`: For validating the blog post ID in the request URL for deletion.
+- `FilterDTO`: For validating and filtering blog posts based on category and sort order.
+- `GetPostDTO`: For validating the blog post ID in the request URL for fetching a specific post.
+
+## Future improvements
+
+We can improve on the database side of things, maybe we can add 2 seperae table 1- Users and 2- Categories to make the system more robust.
